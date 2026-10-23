@@ -1,0 +1,1205 @@
+<!DOCTYPE html>
+<html lang="ug" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ئالاھىدە PPT تەييارلاش قۇرالى</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap');
+        
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            direction: rtl;
+            font-family: "Microsoft Uighur", "UKIJ Tuz Tom", "Segoe UI", sans-serif;
+            background-color: #f1f5f9;
+            color: #1e293b;
+            line-height: 1.6;
+            padding: 40px 20px;
+        }
+
+        .container { max-width: 1400px; margin: 0 auto; }
+
+        /* بەت بېشى */
+        .header { text-align: center; margin-bottom: 50px; position: relative; }
+        .header h1 { 
+            font-size: 3.2rem; 
+            margin-bottom: 15px; 
+            font-weight: 900; 
+            background: linear-gradient(135deg, #1e3a8a, #7c3aed, #db2777);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0px 10px 20px rgba(30, 58, 138, 0.15);
+            letter-spacing: -1px;
+        }
+        .header p { font-size: 1.3rem; color: #475569; max-width: 650px; margin: 0 auto; font-weight: bold;}
+
+        /* ئاساسىي قۇرۇلما */
+        .layout { display: flex; gap: 40px; align-items: flex-start; }
+
+        /* ئوڭ تەرەپ: مەشغۇلات رايونى */
+        .sidebar { width: 32%; display: flex; flex-direction: column; gap: 20px; }
+
+        .card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(16px);
+            border-radius: 24px; 
+            padding: 30px;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.06);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            opacity: 0; transition: opacity 0.3s;
+        }
+        .card:hover { box-shadow: 0 35px 60px -15px rgba(0,0,0,0.1); transform: translateY(-3px); }
+        .card:hover::before { opacity: 1; }
+
+        .step-header { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; }
+        .step-badge {
+            width: 40px; height: 40px; border-radius: 12px; display: flex;
+            align-items: center; justify-content: center; font-weight: 900; font-size: 1.3rem;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+        }
+        .step-badge-1 { background: linear-gradient(135deg, #e0e7ff, #c7d2fe); color: #3730a3; }
+        .step-badge-2 { background: linear-gradient(135deg, #dcfce7, #bbf7d0); color: #166534; }
+
+        .card-title { font-size: 1.4rem; font-weight: 900; color: #0f172a; }
+        .card-desc { color: #475569; font-size: 1.05rem; margin-bottom: 20px; line-height: 1.6; }
+
+        /* كۇنۇپكىلار */
+        .btn {
+            width: 100%; padding: 16px; border: none; border-radius: 14px;
+            font-family: inherit; font-size: 1.2rem; font-weight: 900;
+            cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); display: flex;
+            align-items: center; justify-content: center; gap: 10px; letter-spacing: 0.5px;
+            position: relative; overflow: hidden;
+        }
+        .btn::after {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: rgba(255,255,255,0.1); transform: rotate(45deg); z-index: 1;
+            transition: all 0.3s; opacity: 0;
+        }
+        .btn:hover::after { opacity: 1; transform: rotate(45deg) translate(50%, 50%); }
+
+        .btn-blue { 
+            background: linear-gradient(135deg, #4f46e5, #2563eb); color: #fff; 
+            box-shadow: 0 10px 20px -6px rgba(37, 99, 235, 0.5); 
+        }
+        .btn-blue:hover { transform: translateY(-2px); box-shadow: 0 15px 25px -6px rgba(37, 99, 235, 0.6); }
+        
+        .btn-green { 
+            background: linear-gradient(135deg, #10b981, #059669); color: #fff; 
+            box-shadow: 0 10px 20px -6px rgba(16, 185, 129, 0.5); 
+        }
+        .btn-green:hover { transform: translateY(-2px); box-shadow: 0 15px 25px -6px rgba(16, 185, 129, 0.6); }
+        
+        .btn-outline {
+            background: transparent; color: #475569; border: 2px solid #cbd5e1;
+            padding: 12px; font-size: 1.1rem; border-radius: 12px; box-shadow: none;
+        }
+        .btn-outline:hover { background: #f8fafc; border-color: #94a3b8; color: #0f172a; transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.05);}
+
+        textarea {
+            width: 100%; height: 180px; padding: 15px; border: 2px solid #e2e8f0;
+            border-radius: 14px; font-family: inherit; font-size: 1.1rem;
+            resize: vertical; margin-bottom: 15px; outline: none; background: #f8fafc; 
+            transition: all 0.3s; color: #1e293b; line-height: 1.6; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+        }
+        textarea:focus { border-color: #10b981; background: #ffffff; box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15), inset 0 2px 4px rgba(0,0,0,0.02); }
+
+        /* JSON يۈكلەش رايونى */
+        .file-upload-area {
+            border: 2px dashed #cbd5e1; border-radius: 14px; padding: 15px;
+            text-align: center; background: #f8fafc; transition: all 0.3s;
+            cursor: pointer; position: relative; margin-top: 15px;
+        }
+        .file-upload-area:hover, .file-upload-area.dragover {
+            border-color: #3b82f6; background: #eff6ff;
+        }
+        .file-upload-icon { font-size: 1.8rem; color: #94a3b8; margin-bottom: 5px; transition: 0.3s; }
+        .file-upload-area:hover .file-upload-icon { color: #3b82f6; transform: translateY(-3px);}
+        .file-upload-text { font-size: 1rem; color: #64748b; font-weight: bold; }
+        #jsonFileInput { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
+
+        .action-row { display: flex; gap: 12px; margin-top: 15px; }
+        .action-row .btn { flex: 1; font-size: 1.05rem; padding: 12px;}
+
+        /* سول تەرەپ: كۆرسىتىش رايونى */
+        .main-view {
+            width: 68%; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px);
+            border-radius: 28px; padding: 35px;
+            box-shadow: 0 30px 60px -15px rgba(0,0,0,0.08); border: 1px solid rgba(255,255,255,0.8);
+            display: flex; flex-direction: column; gap: 25px;
+        }
+
+        .toolbar { display: flex; justify-content: space-between; align-items: center; padding: 0 10px; }
+        
+        .fullscreen-btn {
+            background: #0f172a; color: #fff; border: none; padding: 14px 28px;
+            border-radius: 14px; font-family: inherit; font-size: 1.15rem; cursor: pointer;
+            display: flex; align-items: center; gap: 10px; font-weight: 900; transition: all 0.3s;
+            box-shadow: 0 8px 16px rgba(15, 23, 42, 0.25);
+        }
+        .fullscreen-btn:hover { background: #1e293b; transform: translateY(-3px); box-shadow: 0 12px 20px rgba(15, 23, 42, 0.35); }
+
+        .theme-selectors { display: flex; align-items: center; gap: 5px; flex-wrap: wrap; background: #f1f5f9; padding: 8px; border-radius: 30px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.04);}
+        .theme-selectors span { font-weight: 900; color: #475569; margin: 0 15px; font-size: 1.1rem;}
+        
+        .theme-btn {
+            border: none; padding: 10px 22px; border-radius: 22px;
+            font-family: inherit; font-size: 1.1rem; cursor: pointer; font-weight: 800;
+            color: #64748b; background: transparent; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .theme-btn:hover { color: #0f172a; background: rgba(255,255,255,0.5);}
+        .theme-btn.active { background: #ffffff; color: #0f172a; box-shadow: 0 6px 12px rgba(0,0,0,0.1); transform: scale(1.05);}
+
+        /* سىلايىد ئېكرانى */
+        #presentation-screen {
+            width: 100%; aspect-ratio: 16 / 9; border-radius: 20px;
+            position: relative; overflow: hidden; display: flex;
+            align-items: center; justify-content: center; font-size: 15px;
+            transition: background 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
+            box-shadow: inset 0 0 40px rgba(0,0,0,0.06), 0 15px 30px rgba(0,0,0,0.12);
+            cursor: pointer;
+        }
+        
+        #presentation-screen:fullscreen { font-size: 2.75vh; border-radius: 0; box-shadow: none; }
+        #presentation-screen:-webkit-full-screen { font-size: 2.75vh; border-radius: 0; box-shadow: none; }
+
+        .empty-state { text-align: center; color: #94a3b8; display: flex; flex-direction: column; align-items: center; gap: 20px; pointer-events: none; }
+        .empty-state svg { width: 90px; height: 90px; fill: currentColor; opacity: 0.3; }
+        .empty-state h3 { font-size: 2.2rem; color: #475569; font-weight: 900; letter-spacing: 1px;}
+
+        .slides-container { width: 100%; height: 100%; display: none; position: relative; }
+        .slides-container.active { display: block; }
+
+        /* سىلىق بەت ئالمىشىش ۋە بەت سىرتىغا چىقىپ كەتمەسلىك كاپالىتى */
+        .slide {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            display: flex; flex-direction: column;
+            padding: 3.5% 7.5%;
+            z-index: 1;
+            overflow: hidden; 
+            justify-content: center; align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transform: translateX(-50px) scale(0.96);
+            filter: blur(6px);
+            transition: 
+                opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+                transform 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+                filter 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+                visibility 0.65s;
+        }
+
+        .slide.prev-slide {
+            transform: translateX(50px) scale(0.96);
+        }
+
+        .slide.active-slide {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+            z-index: 10;
+            transform: translateX(0) scale(1);
+            filter: blur(0);
+        }
+        
+        .slide-content {
+            width: 100%;
+            max-width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            z-index: 2;
+            overflow-wrap: break-word;
+            word-break: break-word;
+        }
+
+        /* مەزمۇن كۆپ بولغاندا ئاپتوماتىك قۇر ئارىلىقىنى يىغىنچاقلاش */
+        .slide-content.compact-mode .slide-title { margin-bottom: 0.32em; line-height: 1.2; }
+        .slide-content.compact-mode .slide-bullet { margin-bottom: 0.32em; line-height: 1.35; }
+        .slide-content.compact-mode .slide-p { margin-bottom: 0.32em; line-height: 1.35; }
+        .slide-content.compact-mode .sacred-box { padding: 0.7em 1.1em; margin: 0.35em 0; line-height: 1.55; }
+        .slide-content.compact-mode .sacred-badge { margin-bottom: 0.25em; }
+        .slide-content.compact-mode .sacred-translation { margin-top: 0.3em; padding-top: 0.3em; }
+
+        /* قەدەممۇ-قەدەم چىقىش ئۈنۈمى */
+        .step-item {
+            opacity: 0;
+            transform: translateY(22px) scale(0.98);
+            transition: 
+                opacity 0.52s cubic-bezier(0.16, 1, 0.3, 1), 
+                transform 0.52s cubic-bezier(0.16, 1, 0.3, 1),
+                filter 0.52s cubic-bezier(0.16, 1, 0.3, 1);
+            filter: blur(3px);
+        }
+        
+        .step-item.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            filter: blur(0);
+        }
+
+        /* خەت چوڭلۇقلىرى */
+        .slide-title { font-size: 3.5em; font-weight: 900; margin-bottom: 0.5em; text-align: center; line-height: 1.25; }
+        .slide-bullet { font-size: 2.75em; margin-bottom: 0.5em; position: relative; padding-right: 1.45em; line-height: 1.42; font-weight: 800;}
+        .slide-bullet::before { position: absolute; right: 0; font-size: 0.85em; top: 0.12em; }
+        .slide-p { font-size: 2.6em; margin-bottom: 0.5em; line-height: 1.45; font-weight: 800;}
+        .highlight { font-weight: 900; padding: 0.04em 0.4em; border-radius: 8px; display: inline; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+        
+        /* باشلىنىش ۋە ئاخىرلىشىش ئالاھىدە بەتلىرى */
+        .bismillah-title {
+            font-family: 'Amiri', serif; font-size: 5.5em; font-weight: bold; text-align: center;
+            background: linear-gradient(to right, #d4af37, #fef08a, #d4af37);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            text-shadow: 0 10px 30px rgba(212, 175, 55, 0.3); margin-bottom: 0.5em; line-height: 1.4;
+        }
+        
+        .ending-text {
+            font-size: 3.2em; font-weight: 900; text-align: center; line-height: 1.6;
+            color: inherit;
+        }
+
+        /* ================= ئايەت ۋە ھەدىس رامكىسى (ئەرەبچىسى ئۈستىدە، تەرجىمىسى ئاستا ھالەتتە ئاستى تەرەپتە چىقىدۇ) ================= */
+        .sacred-box {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            width: 100%;
+            padding: 1.05em 1.45em;
+            margin: 0.55em 0;
+            border-radius: 18px;
+            font-family: 'Amiri', "Microsoft Uighur", serif; 
+            font-size: 2.3em;
+            color: inherit; 
+            line-height: 1.7;
+            text-align: right;
+            overflow: hidden;
+        }
+
+        .sacred-badge {
+            display: inline-flex;
+            align-items: center;
+            align-self: flex-start;
+            gap: 8px;
+            font-family: "Microsoft Uighur", sans-serif;
+            font-size: 0.7em;
+            font-weight: 900;
+            padding: 0.15em 0.85em;
+            border-radius: 30px;
+            margin-bottom: 0.35em;
+            letter-spacing: 0.5px;
+        }
+
+        /* 1. ئايەت رامكىسى */
+        .ayah-box {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.13), rgba(16, 185, 129, 0.08));
+            border: 2px solid rgba(212, 175, 55, 0.55);
+            border-right: 8px solid #d4af37;
+            box-shadow: 0 8px 24px rgba(212, 175, 55, 0.12);
+        }
+
+        .ayah-badge {
+            background: linear-gradient(135deg, #d4af37, #b45309);
+            color: #ffffff;
+            box-shadow: 0 4px 10px rgba(212, 175, 55, 0.3);
+        }
+
+        /* 2. ھەدىس رامكىسى */
+        .hadith-box {
+            background: linear-gradient(135deg, rgba(14, 165, 233, 0.1), rgba(59, 130, 246, 0.06));
+            border: 2px solid rgba(14, 165, 233, 0.45);
+            border-right: 8px solid #0284c7;
+            box-shadow: 0 8px 24px rgba(2, 132, 199, 0.1);
+        }
+
+        .hadith-badge {
+            background: linear-gradient(135deg, #0284c7, #0369a1);
+            color: #ffffff;
+            box-shadow: 0 4px 10px rgba(2, 132, 199, 0.25);
+        }
+
+        /* ئۈستى قىسىمدىكى ئەرەبچە تېكىست */
+        .ayah-arabic {
+            display: block;
+            width: 100%;
+            font-family: 'Amiri', serif;
+            font-weight: 700;
+            font-size: 1.14em;
+            line-height: 1.85;
+            padding: 0.1em 0;
+            text-align: right;
+            background: linear-gradient(90deg, #92400e 0%, #d97706 25%, #047857 50%, #f59e0b 75%, #92400e 100%);
+            background-size: 300% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: arabicColorWave 5s linear infinite, arabicGentleFloat 3s ease-in-out infinite alternate;
+        }
+
+        .hadith-arabic {
+            display: block;
+            width: 100%;
+            font-family: 'Amiri', "Microsoft Uighur", serif;
+            font-weight: 700;
+            font-size: 1.1em;
+            line-height: 1.85;
+            padding: 0.1em 0;
+            text-align: right;
+            background: linear-gradient(90deg, #0369a1 0%, #0284c7 25%, #4f46e5 50%, #0ea5e9 75%, #0369a1 100%);
+            background-size: 300% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: arabicColorWave 5s linear infinite, arabicGentleFloat 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes arabicColorWave {
+            0% { background-position: 0% center; }
+            100% { background-position: 300% center; }
+        }
+
+        @keyframes arabicGentleFloat {
+            0% { transform: translateY(0); filter: drop-shadow(0 2px 4px rgba(212, 175, 55, 0.15)); }
+            100% { transform: translateY(-2px); filter: drop-shadow(0 6px 14px rgba(212, 175, 55, 0.4)); }
+        }
+
+        /* ئايەتنىڭ گۈللۈك تىرنىقى ﴿ ... ﴾ */
+        .ayah-bracket {
+            display: inline-block;
+            font-family: 'Amiri', serif;
+            font-size: 1.18em;
+            font-weight: 900;
+            margin: 0 4px;
+        }
+
+        /* ھەدىسنىڭ قوش تىرنىقى « ... » */
+        .hadith-quote {
+            display: inline-block;
+            font-weight: 900;
+            font-size: 1.1em;
+            margin: 0 3px;
+        }
+
+        /* قېنىق تېمىلاردا (ئىسلامىي ۋە ھەرىكەتچان) ئەرەبچە خەتنىڭ ھەرىكەتچان رەڭلىرى */
+        .theme-islamic .ayah-box, .theme-dynamic .ayah-box {
+            background: rgba(6, 78, 59, 0.65);
+            border-color: rgba(251, 191, 36, 0.65);
+            border-right-color: #fbbf24;
+        }
+        .theme-islamic .ayah-arabic, .theme-dynamic .ayah-arabic {
+            background: linear-gradient(90deg, #fde047 0%, #ffffff 25%, #fbbf24 50%, #6ee7b7 75%, #fde047 100%);
+            background-size: 300% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .theme-islamic .hadith-box, .theme-dynamic .hadith-box {
+            background: rgba(15, 23, 42, 0.6);
+            border-color: rgba(56, 189, 248, 0.55);
+            border-right-color: #38bdf8;
+            backdrop-filter: blur(8px);
+        }
+        .theme-islamic .hadith-arabic, .theme-dynamic .hadith-arabic {
+            background: linear-gradient(90deg, #7dd3fc 0%, #ffffff 25%, #38bdf8 50%, #fde047 75%, #7dd3fc 100%);
+            background-size: 300% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* ئاستى تەرەپتە ئايرىم قۇردا ئاستا ۋە سىلىق چىقىدىغان ئۇيغۇرچە تەرجىمە رايونى - يېڭىلانغان خەت شەكلى */
+        .sacred-translation {
+            display: block;
+            width: 100%;
+            margin-top: 0.45em;
+            padding-top: 0.45em;
+            /* خەت شەكلى ئەرەبچە نۇسخىسى (Amiri) بىلەن بىردەك بولۇشى ئۈچۈن ئۆزگەرتىلدى */
+            font-family: 'Amiri', "Microsoft Uighur", "UKIJ Tuz Tom", serif;
+            font-size: 1.08em; /* خەت چوڭلۇقى سەل چوڭايتىلدى */
+            font-weight: 700;
+            line-height: 1.75;
+            border-top: 1.5px dashed rgba(148, 163, 184, 0.45);
+            text-align: right;
+            opacity: 0;
+            transform: translateY(18px);
+            filter: blur(4px);
+            transition: 
+                opacity 1.15s cubic-bezier(0.22, 1, 0.36, 1) 0.38s,
+                transform 1.15s cubic-bezier(0.22, 1, 0.36, 1) 0.38s,
+                filter 1.15s cubic-bezier(0.22, 1, 0.36, 1) 0.38s;
+        }
+
+        .step-item.visible .sacred-translation {
+            opacity: 1;
+            transform: translateY(0);
+            filter: blur(0);
+        }
+
+        .theme-trendy .sacred-translation { color: #be185d; border-top-color: rgba(190, 24, 93, 0.25); }
+        .theme-sleek .sacred-translation { color: #1d4ed8; border-top-color: rgba(29, 78, 216, 0.25); }
+        .theme-islamic .sacred-translation { color: #fde047; border-top-color: rgba(253, 224, 71, 0.35); }
+        .theme-dynamic .sacred-translation { color: #fde047; border-top-color: rgba(253, 224, 71, 0.35); }
+
+        /* ================= 4 خىل دەرىجىدىن تاشقىرى ئۇسلۇبلار ================= */
+        
+        /* 1. مودا */
+        .theme-trendy {
+            background-color: #ffffff;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(253, 164, 175, 0.5) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(196, 181, 253, 0.5) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(125, 211, 252, 0.5) 0px, transparent 50%),
+                radial-gradient(at 0% 100%, rgba(253, 230, 138, 0.5) 0px, transparent 50%);
+            color: #1e293b;
+        }
+        .theme-trendy .slide-title { color: #3730a3; text-shadow: 2px 4px 20px rgba(55, 48, 163, 0.2); }
+        .theme-trendy .slide-bullet::before { content: "✦"; color: #ec4899; text-shadow: 0 0 10px rgba(236,72,153,0.4);}
+        .theme-trendy .highlight { background: linear-gradient(120deg, rgba(236,72,153,0.1), rgba(124,58,237,0.1)); color: #be185d; border-bottom: 3px solid #db2777; }
+
+        /* 2. سىپتا */
+        .theme-sleek { background: #f8fafc; color: #0f172a; }
+        .theme-sleek::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 8px; background: linear-gradient(90deg, #2563eb, #38bdf8); }
+        .theme-sleek .slide-title { color: #000; font-weight: 900; letter-spacing: -1px; display: inline-block; position: relative; padding-bottom: 10px; margin-bottom: 0.6em;}
+        .theme-sleek .slide-title::after { content:''; position: absolute; bottom: 0; right: 0; width: 80px; height: 6px; background: #2563eb; border-radius: 6px;}
+        .theme-sleek .slide-bullet::before { content: "—"; color: #2563eb; font-weight: 900; }
+        .theme-sleek .highlight { background: #e0f2fe; color: #0284c7; border-radius: 6px; padding: 0.04em 0.4em; box-shadow: 0 2px 4px rgba(2,132,199,0.1);}
+
+        /* 3. ئىسلامىي */
+        .theme-islamic {
+            background: linear-gradient(135deg, #022c22, #064e3b, #022c22);
+            color: #fef3c7;
+            position: relative;
+        }
+        .theme-islamic::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background-image: 
+                radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.1) 0%, transparent 70%),
+                radial-gradient(circle at 0% 0%, rgba(212, 175, 55, 0.05) 10%, transparent 10.5%),
+                radial-gradient(circle at 100% 0%, rgba(212, 175, 55, 0.05) 10%, transparent 10.5%),
+                radial-gradient(circle at 0% 100%, rgba(212, 175, 55, 0.05) 10%, transparent 10.5%),
+                radial-gradient(circle at 100% 100%, rgba(212, 175, 55, 0.05) 10%, transparent 10.5%),
+                linear-gradient(30deg, #d4af37 1%, transparent 1.5%, transparent 98.5%, #d4af37 99%),
+                linear-gradient(150deg, #d4af37 1%, transparent 1.5%, transparent 98.5%, #d4af37 99%),
+                linear-gradient(60deg, rgba(212, 175, 55, 0.03) 25%, transparent 25.5%, transparent 75%, rgba(212, 175, 55, 0.03) 75%);
+            background-size: 100% 100%, 80px 80px, 80px 80px, 80px 80px, 80px 80px, 120px 208px, 120px 208px, 60px 104px;
+            opacity: 0.15; z-index: 1; pointer-events: none;
+        }
+        .theme-islamic::after {
+            content: ''; position: absolute; top: 15px; left: 15px; right: 15px; bottom: 15px;
+            border: 2px solid rgba(212, 175, 55, 0.2); border-radius: 12px; pointer-events: none; z-index: 1;
+        }
+        .theme-islamic .slide-title { 
+            color: #fbbf24; font-family: "Microsoft Uighur", serif; font-size: 4.1em; 
+            text-shadow: 0 5px 25px rgba(0,0,0,0.8), 0 0 10px rgba(251, 191, 36, 0.3); 
+            border-bottom: 2px solid rgba(251, 191, 36, 0.3); display: inline-block; padding-bottom: 8px; margin-bottom: 0.5em;
+        }
+        .theme-islamic .slide-bullet::before { content: "❁"; color: #fcd34d; font-size: 1.1em; top: 0.05em; text-shadow: 0 0 10px rgba(252, 211, 77, 0.5);}
+        .theme-islamic .highlight { color: #ffffff; border-bottom: 2px dashed #fbbf24; background: rgba(251, 191, 36, 0.15); box-shadow: 0 2px 8px rgba(0,0,0,0.2);}
+        .theme-islamic .ending-text { color: #fbbf24; text-shadow: 0 5px 20px rgba(0,0,0,0.8); }
+
+        /* 4. ھەرىكەتچان */
+        .theme-dynamic {
+            background: linear-gradient(-45deg, #1e1b4b, #312e81, #1e3a8a, #4c1d95, #831843);
+            background-size: 300% 300%;
+            animation: gradientMove 12s ease infinite;
+            color: #f8fafc;
+        }
+        .theme-dynamic::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background-image: radial-gradient(circle, rgba(255,255,255,0.1) 2px, transparent 2px);
+            background-size: 40px 40px; opacity: 0.3; z-index: 1; pointer-events: none;
+        }
+        @keyframes gradientMove { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        .theme-dynamic .slide-title { color: #ffffff; text-shadow: 0 4px 30px rgba(0,0,0,0.6); font-weight: 900; letter-spacing: 1px;}
+        .theme-dynamic .slide-bullet::before { content: "➤"; color: #38bdf8; text-shadow: 0 2px 15px rgba(56, 189, 248, 0.6); }
+        .theme-dynamic .highlight { background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(12px); padding: 2px 12px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.4); box-shadow: 0 8px 20px rgba(0,0,0,0.2);}
+
+        /* ================================================================ */
+
+        .navigation {
+            display: flex; justify-content: space-between; align-items: center;
+            background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(16px);
+            padding: 16px 30px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.6);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+        .nav-btn {
+            background: #ffffff; border: 2px solid #e2e8f0; padding: 12px 30px;
+            border-radius: 14px; font-family: inherit; font-size: 1.2rem; font-weight: 900;
+            cursor: pointer; color: #334155; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+        }
+        .nav-btn:hover { background: #f8fafc; border-color: #94a3b8; color: #0f172a; transform: translateY(-3px); box-shadow: 0 8px 15px rgba(0,0,0,0.06); }
+        .nav-counter { font-weight: 900; color: #0f172a; font-size: 1.4rem; letter-spacing: 3px; background: #f1f5f9; padding: 8px 20px; border-radius: 24px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);}
+
+        #toast {
+            position: fixed; top: 30px; left: 50%; transform: translateX(-50%) translateY(-100px);
+            background: #10b981; color: white; padding: 18px 45px; border-radius: 50px;
+            font-weight: 900; font-size: 1.2rem; box-shadow: 0 20px 40px rgba(16, 185, 129, 0.35);
+            transition: 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55); opacity: 0; z-index: 9999;
+        }
+        #toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+        #toast.error { background: #ef4444; box-shadow: 0 20px 40px rgba(239, 68, 68, 0.35); }
+        
+        @media (max-width: 1200px) { .layout { flex-direction: column; } .sidebar, .main-view { width: 100%; } }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>ئالاھىدە PPT تەييارلاش قۇرالى</h1>
+        <p>تېكىستنى كۆچۈرۈڭ، مەزمۇن قوشۇڭ، ساقلاپ قېلىڭ ۋە ئەڭ سەرخىل دەرىسلەردىن ھۇزۇرلىنىڭ</p>
+    </div>
+
+    <div class="layout">
+        <!-- ئوڭ تەرەپ -->
+        <div class="sidebar">
+            <div class="card">
+                <div class="step-header">
+                    <span class="step-badge step-badge-1">1</span>
+                    <div class="card-title">بۇيرۇقنى كۆچۈرۈش</div>
+                </div>
+                <div class="card-desc">بۇ بۇيرۇقنى كۆچۈرۈپ سۈنئىي ئىدراكقا بېرىڭ. ئۇ قايتۇرغان خەتلەر ئايەت-ھەدىسلىرى بىلەن تەييار دەرىس شەكلىدە بولىدۇ.</div>
+                <button class="btn btn-blue" onclick="copyPrompt()">📋 بۇيرۇقنى كۆچۈرۈش</button>
+            </div>
+
+            <!-- 2-قەدەم: يېڭى مەزمۇن كىرگۈزۈش -->
+            <div class="card">
+                <div class="step-header">
+                    <span class="step-badge step-badge-2">2</span>
+                    <div class="card-title">يېڭى مەزمۇن كىرگۈزۈش</div>
+                </div>
+                <div class="card-desc">سۈنئىي ئىدراك قايتۇرغان جاۋابنى ئاستىغا چاپلاپ دەرىس ھاسىل قىلىڭ ۋە JSON قىلىپ ساقلاڭ.</div>
+                <textarea id="ai-input" placeholder="مەزمۇننى مۇشۇ يەرگە چاپلاڭ..."></textarea>
+                <div class="action-row">
+                    <button class="btn btn-green" onclick="generateSlides()">✨ دەرىس باشلاش</button>
+                    <button class="btn btn-outline" id="exportBtn" onclick="exportToJson()" style="display:none; margin-top:0;">💾 JSON چۈشۈرۈش</button>
+                </div>
+                
+                <!-- JSON يۈكلەش رايونى -->
+                <div class="file-upload-area" id="dropZone">
+                    <div class="file-upload-icon">📂</div>
+                    <div class="file-upload-text">ياكى تەييار JSON ھۆججىتىنى يۈكلەڭ</div>
+                    <input type="file" id="jsonFileInput" accept=".json" onchange="loadJsonFile(event)">
+                </div>
+            </div>
+        </div>
+
+        <!-- سول تەرەپ -->
+        <div class="main-view">
+            <div class="toolbar">
+                <button class="fullscreen-btn" onclick="toggleFullScreen()">⛶ پۈتۈن ئېكران</button>
+                <div class="theme-selectors">
+                    <button class="theme-btn t-trendy active" onclick="setTheme('theme-trendy', this)">مودا</button>
+                    <button class="theme-btn t-sleek" onclick="setTheme('theme-sleek', this)">سىپتا</button>
+                    <button class="theme-btn t-islamic" onclick="setTheme('theme-islamic', this)">ئىسلامىي 🕌</button>
+                    <button class="theme-btn t-dynamic" onclick="setTheme('theme-dynamic', this)">ھەرىكەتچان</button>
+                </div>
+            </div>
+
+            <div id="presentation-screen" class="theme-trendy">
+                <div class="empty-state" id="empty-state">
+                    <svg viewBox="0 0 24 24"><path d="M21 16H3V4H21M21 2H3C1.89 2 1 2.89 1 4V16C1 17.11 1.89 18 3 18H10V20H8V22H16V20H14V18H21C22.11 18 23 17.11 23 16V4C23 2.89 22.11 2 21 2Z"/></svg>
+                    <h3>دەرىس بۇ يەردە كۆرۈنىدۇ</h3>
+                    <p>مەزمۇن كىرگۈزۈلگەندىن كېيىن ياكى JSON يۈكلەنگەندە كۆرسىتىلىدۇ</p>
+                </div>
+                <div class="slides-container" id="slides-container"></div>
+            </div>
+
+            <div class="navigation">
+                <button class="nav-btn" onclick="prevSlideAction()">ئالدىنقى &gt;</button>
+                <div class="nav-counter" id="slide-counter">0 / 0</div>
+                <button class="nav-btn" onclick="nextSlideAction()">&lt; كېيىنكى</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="toast">✅ مۇۋەپپەقىيەتلىك كۆچۈرۈلدى!</div>
+
+<script>
+    const standardPrompt = `سەن بىر كەسپىي لېكسىيە لايىھەلىگۈچىسى ۋە سىلايىد (PPT) مۇتەخەسسىسى. مەن تەمىنلىگەن ئۇچۇر ياكى تېمىنى ئەڭ راۋان، ئۆلچەملىك ۋە ئەدەبىي ئۇيغۇر تىلىدا، لوگىكىلىق قۇرۇلمىسى چىڭ، مەزمۇنى ئىخچام ھەم چۈشىنىشلىك بولغان دەرسلىك سىلايىد مەزمۇنىغا ئايلاندۇرۇپ بەر.
+
+مەزمۇننى بىر تەرەپ قىلىش تەلىپى:
+1. تېمىنىڭ يادرولۇق ئىدىيەسىنى ۋە ئاچقۇچلۇق نۇقتىلىرىنى ئاجرىتىپ ئال.
+2. بىر سىلايىد بېتىگە مەزمۇننى زىيادە كۆپ دۆۋىلىۋەتمەي، ئوقۇشقا ئەپلىك ۋە مۇۋاپىق مىقداردا ياز.
+3. **ئايەت بىلەن ھەدىسنى ئېنىق پەرقلەندۈرۈش تەلىپى (ئىنتايىن مۇھىم):**
+   - مەزمۇندا قۇرئان كەرىم ئايىتى كەلسە، قۇرنى چوقۇم \`> [ئايەت]\` دەپ باشلاپ، ئەسلى ئەرەبچە تېكىستىنى ياز (ئارتۇقچە سۆز ۋە تىرناق بەلگىلىرى قوشما). ئاندىن ئاستىدىكى يېڭى قۇردا تەرجىمىسىنى يازغاندا بېشىغا «تەرجىمىسى:» دېمەي، بىۋاسىتە \`> **(سۈرە ئىسمى، ئايەت نومۇرى): ئۇيغۇرچە تەرجىمە تېكىستى**\` شەكلىدە ياز.
+   - مەزمۇندا ھەدىس شەرىپ كەلسە، قۇرنى چوقۇم \`> [ھەدىس]\` دەپ باشلاپ، ھەدىسنىڭ ئەسلى ئەرەبچە تېكىستىنى ياز (ئارتۇقچە سۆز ۋە تىرناق قوشما). ئاندىن ئاستىدىكى يېڭى قۇردا تەرجىمىسىنى يازغاندا بېشىغا «تەرجىمىسى:» دېمەي، بىۋاسىتە \`> **(رىۋايەت قىلغۇچى مەنبەسى): ئۇيغۇرچە تەرجىمە تېكىستى**\` دەپ ياز.
+
+تۆۋەندىكى تىزىش فورماتىغا (Markdown) قەتئىي ۋە قاتتىق ئەمەل قىل:
+- [بەت ئايرىش]: ھەر بىر يېڭى بەتنى باشلاشتىن بۇرۇن پەقەتلا '---' (ئۈچ سىزىقچە) يېزىپ قۇر ئاتلا.
+- [بەت تېمىسى]: ھەر بىر بەتنىڭ باش تېمىسىنى چوقۇم '#' بەلگىسى بىلەن باشلاپ ياز.
+- [تارماق نۇقتىلار]: تارماق مەزمۇنلارنى چوقۇم '-' بەلگىسى بىلەن باشلاپ قىسقا ۋە ئېنىق تىزىپ چىق.
+- [مۇھىم سۆزلەر]: ئاچقۇچلۇق نۇقتىلىق سۆزلەرنى قوش يۇلتۇز ئىچىگە ئال (**مۇھىم سۆز**).
+ئاخىرىدا بارلىق دەرىس مەزمۇنىنى ئىخچام ھالدا خۇلاسىلەپ چىقىرىپ بەر.
+ئالاھىدە ئاگاھلاندۇرۇش: ھېچقانداق سالام-سائەت، قوشۇمچە ئىزاھات ياكى چۈشەندۈرۈش قوشماي، پەقەت ساپ سىلايىد مەزمۇنىنىلا قايتۇر.
+________________________________________
+\n`;
+
+    function showToast(msg, isError = false) {
+        const toast = document.getElementById('toast');
+        toast.innerText = msg;
+        toast.className = isError ? 'error show' : 'show';
+        setTimeout(() => toast.className = '', 3500);
+    }
+
+    function copyPrompt() {
+        navigator.clipboard.writeText(standardPrompt).then(() => {
+            showToast("✅ بۇيرۇق مۇۋەپپەقىيەتلىك كۆچۈرۈلدى!");
+        }).catch(() => {
+            showToast("❌ كۆچۈرۈلمىدى، توركۆرگۈڭىزنى تەكشۈرۈڭ.", true);
+        });
+    }
+
+    function parseHighlights(text) {
+        return text.replace(/\*\*(.*?)\*\*/g, '<span class="highlight">$1</span>');
+    }
+
+    function normalizeArabic(str) {
+        if (!str) return '';
+        return str
+            .replace(/[\u064B-\u065F\u0670\u06D6-\u06ED]/g, '')
+            .replace(/[إأآٱ]/g, 'ا')
+            .replace(/ة/g, 'ه')
+            .replace(/ى/g, 'ي');
+    }
+
+    function isUyghurText(str) {
+        if (!str) return false;
+        if (/[پچژگڭھۆۇۈۋېە]/.test(str)) return true;
+        if (/ئ[اەېىوۇۆۈ]/.test(str)) return true;
+        if (/(تەرجىمىسى|مەنىسى|مەزمۇنى|سۈرە|سۈرىسى|رىۋايەت|ئايەت|ھەدىس)/.test(str)) return true;
+        return false;
+    }
+
+    function splitMixedArabicAndUyghur(line) {
+        const boldMatch = line.match(/^(.*?)\s*\*\*(.+?)\*\*(.*)$/);
+        if (boldMatch) {
+            const beforeBold = boldMatch[1].replace(/[\s\-–—:：،,]+$/, '').trim();
+            const boldAndAfter = (boldMatch[2] + ' ' + boldMatch[3]).trim();
+            if (beforeBold && !isUyghurText(beforeBold) && isUyghurText(boldAndAfter)) {
+                return { arabic: beforeBold, translation: boldAndAfter };
+            }
+        }
+
+        const tokens = line.split(/\s+/);
+        let firstUyghurIdx = -1;
+        for (let i = 0; i < tokens.length; i++) {
+            if (isUyghurText(tokens[i])) {
+                firstUyghurIdx = i;
+                break;
+            }
+        }
+
+        if (firstUyghurIdx > 0) {
+            let arabicPart = tokens.slice(0, firstUyghurIdx).join(' ').replace(/[\s\-–—:：،,\(\[«]+$/, '').trim();
+            let transPart = tokens.slice(firstUyghurIdx).join(' ').replace(/^[\s\-–—:：]+/, '').trim();
+            if (arabicPart && /[\u0621-\u064A]/.test(arabicPart)) {
+                return { arabic: arabicPart, translation: transPart };
+            }
+        }
+
+        return null;
+    }
+
+    function detectSacredType(text, contextText = '') {
+        if (text.includes('[ھەدىس]') || /^ھەدىس\s*[:：]/.test(text)) {
+            return 'hadith';
+        }
+        if (text.includes('[ئايەت]') || /^ئايەت\s*[:：]/.test(text)) {
+            return 'ayah';
+        }
+
+        const normText = normalizeArabic(text);
+        const normContext = normalizeArabic(contextText);
+        const combined = normText + ' ' + normContext;
+
+        const hadithKeywords = [
+            'قال رسول الله', 'رسول الله', 'قال النبي', 'النبي صلي', 'صلي الله عليه وسلم', 'ﷺ',
+            'عليه الصلاه والسلام', 'رواه', 'البخاري', 'مسلم', 'الترمذي', 'ابو داود', 'ابن ماجه',
+            'النسائي', 'متفق عليه', 'عن ابي', 'عن ابن', 'رضي الله عنه', 'پەيغەمبەر', 'رەسۇلۇللاھ',
+            'ھەدىس', 'سەللەللاھۇ', 'ئەلەيھىسسالام', 'رىۋايەت', 'بۇخارى', 'مۇسلىم', 'تىرمىزى', 'ئەبۇ ھۇرەيرە'
+        ];
+
+        const ayahKeywords = [
+            'قال الله', 'قال تعالي', 'يقول الله', 'اعوذ بالله', 'سوره ', 'ئاللاھ تائالا',
+            'ئاللاھ مۇنداق', 'قۇرئان', 'سۈرە', 'سۈرىسى', 'ئايەت'
+        ];
+
+        for (let kw of hadithKeywords) {
+            if (normText.includes(kw)) return 'hadith';
+        }
+        for (let kw of ayahKeywords) {
+            if (normText.includes(kw)) return 'ayah';
+        }
+
+        for (let kw of hadithKeywords) {
+            if (combined.includes(kw)) return 'hadith';
+        }
+        for (let kw of ayahKeywords) {
+            if (combined.includes(kw)) return 'ayah';
+        }
+
+        if (text.includes('﴿') || text.includes('﴾')) {
+            return 'ayah';
+        }
+
+        return 'ayah';
+    }
+
+    function stripExtraQuotesAndBrackets(str) {
+        if (!str) return '';
+        return str
+            .replace(/[﴿﴾«»“”„‟"']/g, '')
+            .replace(/^[\s\(\[\{⟨‹<«"']+|[\s\)\]\}⟩›>»"']+$/g, '')
+            .trim();
+    }
+
+    function formatSacredBlock(rawText, boxType) {
+        const lines = rawText.split('\n').map(l => l.trim()).filter(Boolean);
+        let mainLines = [];
+        let transLines = [];
+
+        lines.forEach(line => {
+            let clean = line
+                .replace(/^\[(ئايەت|ھەدىس|تەرجىمىسى)\]\s*/, '')
+                .replace(/^(ئايەت|ھەدىس)\s*[:：]\s*/, '')
+                .trim();
+            if (!clean) return;
+
+            if (mainLines.length === 0) {
+                const mixed = splitMixedArabicAndUyghur(clean);
+                if (mixed) {
+                    mainLines.push(mixed.arabic);
+                    transLines.push(mixed.translation.replace(/^\*\*|\*\*$/g, '').trim());
+                } else if (isUyghurText(clean) && lines.length > 1) {
+                    transLines.push(clean.replace(/^\*\*|\*\*$/g, '').trim());
+                } else {
+                    mainLines.push(clean);
+                }
+            } else {
+                if (isUyghurText(clean) || clean.startsWith('**')) {
+                    transLines.push(clean.replace(/^\*\*|\*\*$/g, '').trim());
+                } else {
+                    const mixed = splitMixedArabicAndUyghur(clean);
+                    if (mixed) {
+                        mainLines.push(mixed.arabic);
+                        transLines.push(mixed.translation.replace(/^\*\*|\*\*$/g, '').trim());
+                    } else {
+                        mainLines.push(clean);
+                    }
+                }
+            }
+        });
+
+        let cleanedMainLines = mainLines.map(l => stripExtraQuotesAndBrackets(l)).filter(Boolean);
+        let mainText = cleanedMainLines.join(' ');
+        
+        // 1. ئەرەبچە تېكىست بېشىدىكى بارلىق ئارتۇقچە خەتلەرنى يوقىتىش (تەرجىمىسى، [ئايەت] قاتارلىق)
+        let prefixRegex = /^(?:تەرجىمىسى[\s:：]*|ئۇيغۇرچە تەرجىمىسى[\s:：]*|ھەدىس تەرجىمىسى[\s:：]*|ھەدىس مەزمۇنى[\s:：]*|ئايەت[\s:：]*|ھەدىس[\s:：]*|\[ئايەت\][\s:：]*|\[ھەدىس\][\s:：]*)*/gi;
+        mainText = mainText.replace(prefixRegex, '').trim();
+        mainText = stripExtraQuotesAndBrackets(mainText);
+
+        let transText = transLines
+            .map(l => l.replace(/^[«»“”"']+|[«»“”"']+$/g, '').trim())
+            .filter(Boolean)
+            .join('<br>');
+
+        if (boxType === 'ayah') {
+            let html = '<div class="sacred-box ayah-box step-item">';
+            html += '<div class="sacred-badge ayah-badge">﴿ قۇرئان كەرىم ئايىتى ﴾</div>';
+            if (mainText) {
+                let decoratedAyah = '<span class="ayah-bracket">﴿</span>' + parseHighlights(mainText) + '<span class="ayah-bracket">﴾</span>';
+                html += '<div class="ayah-arabic">' + decoratedAyah + '</div>';
+            }
+            if (transText) {
+                // 2. ئۇيغۇرچە تەرجىمە بېشىدىكى ئارتۇقچە سۆزلەرنى يوقىتىپ پەقەت سۈرە ئىسمىنىلا قالدۇرۇش
+                let cleanTrans = transText
+                    .replace(/^(?:ئۇيغۇرچە\s*)?تەرجىمىسى[\s:：]*(?:\[ئايەت\])?[\s:：]*/gi, '')
+                    .replace(/^تەرجىمىسى[\s:：]*/gi, '');
+                
+                // ئەگەر (زۈمەر سۈرىسى) دەپ تىرناقتا كەلگەن بولسا، ئالدىدىكى خەتنى يوقىتىش
+                cleanTrans = cleanTrans.replace(/^(?:ئۇيغۇرچە\s*)?تەرجىمىسى\s*(?=\()/gi, '');
+                
+                html += '<div class="sacred-translation">' + parseHighlights(cleanTrans) + '</div>';
+            }
+            html += '</div>';
+            return html;
+        } else {
+            let html = '<div class="sacred-box hadith-box step-item">';
+            html += '<div class="sacred-badge hadith-badge">📜 ھەدىس شەرىپ</div>';
+            if (mainText) {
+                let decoratedHadith = '<span class="hadith-quote">«</span>' + parseHighlights(mainText) + '<span class="hadith-quote">»</span>';
+                html += '<div class="hadith-arabic">' + decoratedHadith + '</div>';
+            }
+            if (transText) {
+                // 3. ھەدىس تەرجىمىسى بېشىدىكى ئارتۇقچە سۆزلەرنى يوقىتىش
+                let cleanTrans = transText
+                    .replace(/^ھەدىس(?:\s*شەرىپ)?\s*(?:تەرجىمىسى|مەزمۇنى)[\s:：]*(?:\[ھەدىس\])?[\s:：]*/gi, '')
+                    .replace(/^(?:ئۇيغۇرچە\s*)?تەرجىمىسى[\s:：]*/gi, '');
+                
+                cleanTrans = cleanTrans.replace(/^ھەدىس(?:\s*شەرىپ)?\s*(?:تەرجىمىسى|مەزمۇنى)\s*(?=\()/gi, '');
+                
+                html += '<div class="sacred-translation">' + parseHighlights(cleanTrans) + '</div>';
+            }
+            html += '</div>';
+            return html;
+        }
+    }
+
+    let slidesDOM = [];
+    let currentIndex = 0;
+    let currentStepIndex = 0; 
+    let currentSlideSteps = [];
+    
+    let currentLessonData = null;
+
+    const dropZone = document.getElementById('dropZone');
+    dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('dragover'); });
+    dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+    dropZone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        dropZone.classList.remove('dragover');
+        if(e.dataTransfer.files.length) {
+            document.getElementById('jsonFileInput').files = e.dataTransfer.files;
+            loadJsonFile({target: {files: e.dataTransfer.files}});
+        }
+    });
+
+    function parseTextToData(text) {
+        const pages = text.split(/---/);
+        let rawSlides = [];
+        
+        rawSlides.push({
+            type: "start",
+            content: ["بسم الله الرحمن الرحيم"]
+        });
+
+        pages.forEach(page => {
+            const lines = page.trim().split('\n');
+            if (lines.length === 0 || !page.trim()) return;
+
+            let slideObj = { type: "content", elements: [] };
+            let isQuoteBlock = false;
+            let quoteContent = "";
+            let lastNonQuoteLine = "";
+
+            lines.forEach(line => {
+                const l = line.trim();
+                if (!l) return;
+                
+                if (l.startsWith('>')) {
+                    let textContent = l.replace(/^>\s*/, '');
+                    if (isQuoteBlock && (/^\[(ئايەت|ھەدىس)\]/.test(textContent) || /^(ئايەت|ھەدىس)\s*[:：]/.test(textContent))) {
+                        let qType = detectSacredType(quoteContent.trim(), lastNonQuoteLine);
+                        slideObj.elements.push({ type: qType, text: quoteContent.trim() });
+                        quoteContent = "";
+                    }
+                    isQuoteBlock = true;
+                    quoteContent += textContent + "\n";
+                } else {
+                    if (isQuoteBlock && !isUyghurText(quoteContent) && !l.startsWith('#') && !l.startsWith('-') && !l.startsWith('*') && isUyghurText(l)) {
+                        quoteContent += l + "\n";
+                        return;
+                    }
+
+                    if (isQuoteBlock) {
+                        let qType = detectSacredType(quoteContent.trim(), lastNonQuoteLine);
+                        slideObj.elements.push({ type: qType, text: quoteContent.trim() });
+                        isQuoteBlock = false;
+                        quoteContent = "";
+                    }
+
+                    lastNonQuoteLine = l;
+
+                    if (l.startsWith('#')) {
+                        slideObj.elements.push({ type: "title", text: l.replace(/^#+\s*/, '') });
+                    } else if (l.startsWith('-') || l.startsWith('*')) {
+                        slideObj.elements.push({ type: "bullet", text: l.replace(/^[-*]\s*/, '') });
+                    } else {
+                        slideObj.elements.push({ type: "text", text: l });
+                    }
+                }
+            });
+            
+            if (isQuoteBlock) {
+                 let qType = detectSacredType(quoteContent.trim(), lastNonQuoteLine);
+                 slideObj.elements.push({ type: qType, text: quoteContent.trim() });
+            }
+            
+            if(slideObj.elements.length > 0) rawSlides.push(slideObj);
+        });
+        
+        rawSlides.push({
+            type: "end",
+            content: ["دەرىس ئاخىرلاشتى", "كىيىنكى دەرىسكىچە ھەممىڭلارنى ئاللاھقا تاپشۇردۇم", "ئاللاھقا ئامانەت"]
+        });
+        
+        return {
+            version: "2.6",
+            createdAt: new Date().toISOString(),
+            slides: rawSlides
+        };
+    }
+
+    function renderLessonData(data) {
+        const container = document.getElementById('slides-container');
+        container.innerHTML = '';
+        
+        let validSlides = 0;
+
+        data.slides.forEach(slide => {
+            let slideHtml = '<div class="slide"><div class="slide-content">';
+            
+            if (slide.type === "start") {
+                slideHtml += '<div class="bismillah-title step-item">' + slide.content[0] + '</div>';
+            } 
+            else if (slide.type === "end") {
+                slide.content.forEach((text) => {
+                    slideHtml += '<div class="ending-text step-item">' + text + '</div>';
+                });
+            }
+            else if (slide.type === "content") {
+                let prevTextContext = "";
+                slide.elements.forEach(el => {
+                    if (el.type === "title") {
+                        let cleanTitle = el.text.replace(/\s*\(داۋامى\)\s*/g, '');
+                        prevTextContext = cleanTitle;
+                        slideHtml += '<h1 class="slide-title">' + parseHighlights(cleanTitle) + '</h1>';
+                    } else if (el.type === "ayah" || el.type === "hadith" || el.type === "quran-hadith") {
+                        let qType = (el.type === "hadith") ? "hadith" : detectSacredType(el.text, prevTextContext);
+                        slideHtml += formatSacredBlock(el.text, qType);
+                    } else if (el.type === "bullet") {
+                        prevTextContext = el.text;
+                        slideHtml += '<div class="slide-bullet step-item">' + parseHighlights(el.text) + '</div>';
+                    } else if (el.type === "text") {
+                        prevTextContext = el.text;
+                        slideHtml += '<p class="slide-p step-item">' + parseHighlights(el.text) + '</p>';
+                    }
+                });
+            }
+            
+            slideHtml += '</div></div>';
+            container.innerHTML += slideHtml;
+            validSlides++;
+        });
+
+        if (validSlides > 0) {
+            slidesDOM = container.querySelectorAll('.slide');
+            document.getElementById('empty-state').style.display = 'none';
+            container.classList.add('active');
+            
+            currentIndex = 0;
+            updateSlides();
+            
+            document.getElementById('exportBtn').style.display = 'flex';
+        }
+        return validSlides;
+    }
+
+    function generateSlides() {
+        const text = document.getElementById('ai-input').value.trim();
+        if (!text) { showToast("⚠️ ئاۋۋال مەزمۇننى كىرگۈزۈڭ!", true); return; }
+
+        currentLessonData = parseTextToData(text);
+        const validSlides = renderLessonData(currentLessonData);
+
+        if (validSlides > 0) {
+            showToast("🎉 دەرىس مۇۋەپپەقىيەتلىك تەييارلاندى! چۈشۈرۈۋېلىشنى ئۇنتۇماڭ.");
+        }
+    }
+
+    function loadJsonFile(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            try {
+                const data = JSON.parse(e.target.result);
+                if (data && data.slides) {
+                    currentLessonData = data;
+                    renderLessonData(data);
+                    showToast("📂 " + file.name + " مۇۋەپپەقىيەتلىك يۈكلەندى!");
+                } else {
+                    showToast("❌ بۇ ھۆججەتنىڭ قۇرۇلمىسى خاتا ئىكەن.", true);
+                }
+            } catch (err) {
+                showToast("❌ ھۆججەتنى ئوقۇش مەغلۇپ بولدى.", true);
+            }
+        };
+        reader.readAsText(file);
+    }
+
+    function exportToJson() {
+        if (!currentLessonData) {
+            showToast("⚠️ چۈشۈرىدىغان دەرىس يوق!", true); return;
+        }
+        
+        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(currentLessonData, null, 2));
+        const downloadAnchorNode = document.createElement('a');
+        downloadAnchorNode.setAttribute("href", dataStr);
+        downloadAnchorNode.setAttribute("download", "My_Lesson_" + new Date().getTime() + ".json");
+        document.body.appendChild(downloadAnchorNode); 
+        downloadAnchorNode.click();
+        downloadAnchorNode.remove();
+        
+        showToast("💾 دەرىس مۇۋەپپەقىيەتلىك چۈشۈرۈلدى!");
+    }
+
+    function autoFitText(slideElement) {
+        const content = slideElement.querySelector('.slide-content');
+        if (!content) return;
+
+        content.classList.remove('compact-mode');
+        content.style.fontSize = '1em';
+
+        const styles = window.getComputedStyle(slideElement);
+        const padTop = parseFloat(styles.paddingTop) || 0;
+        const padBottom = parseFloat(styles.paddingBottom) || 0;
+        const availableHeight = (slideElement.clientHeight - padTop - padBottom) * 0.96;
+
+        if (availableHeight <= 0) return;
+
+        if (content.scrollHeight > availableHeight) {
+            content.classList.add('compact-mode');
+        }
+
+        if (content.scrollHeight > availableHeight) {
+            let low = 0.22;
+            let high = 1.0;
+            let best = 0.22;
+
+            for (let i = 0; i < 12; i++) {
+                let mid = (low + high) / 2;
+                content.style.fontSize = mid + 'em';
+                if (content.scrollHeight <= availableHeight) {
+                    best = mid;
+                    low = mid;
+                } else {
+                    high = mid;
+                }
+            }
+            content.style.fontSize = best + 'em';
+        }
+    }
+
+    function updateSlides() {
+        slidesDOM.forEach((el, index) => {
+            el.classList.remove('active-slide', 'prev-slide');
+            if (index === currentIndex) {
+                el.classList.add('active-slide');
+                
+                currentStepIndex = 0;
+                currentSlideSteps = el.querySelectorAll('.step-item');
+                currentSlideSteps.forEach(step => step.classList.remove('visible'));
+
+                autoFitText(el);
+                requestAnimationFrame(() => {
+                    autoFitText(el);
+                    if(currentSlideSteps.length > 0) {
+                        currentSlideSteps[0].classList.add('visible');
+                        currentStepIndex = 1;
+                    }
+                });
+                
+            } else if (index < currentIndex) {
+                el.classList.add('prev-slide');
+            }
+        });
+        document.getElementById('slide-counter').innerText = slidesDOM.length > 0 ? (currentIndex + 1) + " / " + slidesDOM.length : '0 / 0';
+    }
+
+    window.addEventListener('resize', () => {
+        if (slidesDOM.length > 0 && slidesDOM[currentIndex]) {
+            autoFitText(slidesDOM[currentIndex]);
+        }
+    });
+
+    document.addEventListener('fullscreenchange', () => {
+        setTimeout(() => {
+            if (slidesDOM.length > 0 && slidesDOM[currentIndex]) {
+                autoFitText(slidesDOM[currentIndex]);
+            }
+        }, 100);
+    });
+
+    function nextSlideAction() {
+        if (slidesDOM.length === 0) return;
+        
+        if (currentStepIndex < currentSlideSteps.length) {
+            currentSlideSteps[currentStepIndex].classList.add('visible');
+            currentStepIndex++;
+        } else if (currentIndex < slidesDOM.length - 1) {
+            currentIndex++;
+            updateSlides();
+        }
+    }
+
+    function prevSlideAction() {
+        if (slidesDOM.length === 0) return;
+        
+        if (currentStepIndex > 1) {
+            currentStepIndex--;
+            currentSlideSteps[currentStepIndex].classList.remove('visible');
+        } else if (currentIndex > 0) {
+            currentIndex--;
+            updateSlides();
+            
+            setTimeout(() => {
+                currentSlideSteps.forEach(step => step.classList.add('visible'));
+                currentStepIndex = currentSlideSteps.length;
+            }, 120);
+        }
+    }
+
+    function setTheme(themeClass, btnElement) {
+        document.getElementById('presentation-screen').className = themeClass;
+        document.querySelectorAll('.theme-btn').forEach(btn => btn.classList.remove('active'));
+        btnElement.classList.add('active');
+        if (slidesDOM.length > 0 && slidesDOM[currentIndex]) {
+            autoFitText(slidesDOM[currentIndex]);
+        }
+    }
+
+    function toggleFullScreen() {
+        const screen = document.getElementById('presentation-screen');
+        if (!document.fullscreenElement) {
+            if (screen.requestFullscreen) { screen.requestFullscreen(); }
+            else if (screen.webkitRequestFullscreen) { screen.webkitRequestFullscreen(); }
+        } else {
+            if (document.exitFullscreen) { document.exitFullscreen(); }
+            else if (document.webkitExitFullscreen) { document.webkitExitFullscreen(); }
+        }
+    }
+    
+    document.getElementById('presentation-screen').addEventListener('click', function(e) {
+        if (slidesDOM.length === 0) return;
+        const rect = this.getBoundingClientRect();
+        const clickX = e.clientX - rect.left;
+        
+        if (clickX < rect.width / 2) {
+            nextSlideAction();
+        } else {
+            prevSlideAction();
+        }
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if(slidesDOM.length === 0) return;
+        if (e.key === 'ArrowLeft' || e.key === 'ArrowDown' || e.key === ' ') nextSlideAction();
+        if (e.key === 'ArrowRight' || e.key === 'ArrowUp') prevSlideAction();
+    });
+</script>
+</body>
+</html>
